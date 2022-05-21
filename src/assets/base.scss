@@ -1,0 +1,186 @@
+@media (prefers-color-scheme: dark) {
+  :root {
+    --main-bg-color: #222323;
+    --main-fg-color: #f0f6f0;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --main-bg-color: #f0f6f0;
+    --main-fg-color: #222323;
+  }
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+/*
+  2. Remove default margin
+*/
+* {
+  margin: 0;
+}
+/*
+  3. Allow percentage-based heights in the application
+*/
+html,
+body {
+  height: 100%;
+}
+/*
+  Typographic tweaks!
+  4. Add accessible line-height
+  5. Improve text rendering
+*/
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+/*
+  6. Improve media defaults
+*/
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+/*
+  7. Remove built-in form typography styles
+*/
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+/*
+  8. Avoid text overflows
+*/
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+/*
+  9. Create a root stacking context
+*/
+#root,
+#__next {
+  isolation: isolate;
+}
+
+.sr-only {
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  border: 0;
+  padding: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  margin: -1px;
+}
+
+a,
+button {
+  position: relative;
+}
+
+a:hover::after,
+button:hover::after {
+  transform: scaleX(1);
+}
+
+a:focus-visible::after,
+button:focus-visible::after {
+  transform: scaleX(1);
+}
+
+a.link-hover::after {
+  transform: scaleX(1);
+}
+
+a::after,
+button::after {
+  content: '';
+  background-color: var(--main-fg-color);
+  display: block;
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  transition: transform 0.35s;
+  transition-delay: 0s;
+  transition-timing-function: cubic-bezier(0.37, 0, 0.63, 1);
+  transform: scaleX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-wrap {
+    > li {
+      animation: none;
+    }
+  }
+}
+.marquee-wrap {
+  @apply relative block overflow-hidden font-bold cursor-pointer font-space h-full w-[77px] lg:w-[155px] lg:min-w-[200px] min-w-[100px];
+
+  > li {
+    @apply w-[1000px] lg:w-[2000px] h-full;
+    display: flex;
+    align-items: center;
+    will-change: transform;
+    text-indent: 0;
+    justify-content: space-around;
+    transition: all 1.4s ease-in-out 0;
+    animation: text-scroller 15000ms linear 0ms normal infinite;
+    animation-play-state: paused;
+    white-space: nowrap;
+
+    ul {
+      margin-left: 0;
+      padding-left: 0;
+      list-style-type: none;
+    }
+  }
+
+  &:hover,
+  &:focus-visible {
+    > li {
+      animation-play-state: running;
+    }
+  }
+}
+
+@keyframes text-scroller {
+  100% {
+    transform: translateX(calc(2000px * -0.5));
+  }
+}
+
+#app {
+  min-height: 100%;
+  display: flex;
+  background-color: var(--main-bg-color);
+  color: var(--main-fg-color);
+  font-family: 'IBM Plex Mono', monospace;
+}
